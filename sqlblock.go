@@ -110,6 +110,13 @@ func (block Block) insertData() insertData {
 	var existingBlock ExistingBlock
 
 	switch nearBlock := block.NearBlock.(type) {
+	case map[string]interface{}:
+		parsedExistingBlock := nearBlock["ExistingBlock"].(map[string]interface{})
+		existingBlock = ExistingBlock{
+			NearHash:       parsedExistingBlock["near_hash"].(string),
+			NearParentHash: parsedExistingBlock["near_parent_hash"].(string),
+			Author:         parsedExistingBlock["author"].(string),
+		}
 	case map[interface{}]interface{}:
 		parsedExistingBlock := nearBlock["ExistingBlock"].(map[interface{}]interface{})
 		existingBlock = ExistingBlock{
