@@ -1,0 +1,2 @@
+---
+database: postgres://aurora:aurora@localhost:5432/aurora
