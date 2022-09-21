@@ -50,7 +50,7 @@ type Block struct {
 	ReceiptsRoot     H256          `cbor:"receipts_root" json:"receipts_root"`
 	Transactions     []Transaction `cbor:"transactions" json:"transactions"`
 	NearBlock        any           `cbor:"near_metadata" json:"near_metadata"`
-	StateRoot        string        `cbor:"state_root" json:"state_root"`
+	StateRoot        H256          `cbor:"state_root" json:"state_root"`
 	Size             Uint256       `cbor:"size" json:"size"`
 	Sequence         Uint64
 }

@@ -17,5 +17,7 @@ func main() {
 }
 ```
 
-## TODO
-Add tests
+## How to test
+1. `cp config/test.yaml_example config/test.yaml`
+2. Modify `database` in `config/test.yaml` file.
+3. Run `go test`

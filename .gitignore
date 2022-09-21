@@ -22,4 +22,4 @@ docs/
 coverage/
 
 # Local configuration
-config/local.yaml
+config/test.yaml

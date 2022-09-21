@@ -1,0 +1,2 @@
+---
+database: postgres://spilin:@localhost:5432/aurora
