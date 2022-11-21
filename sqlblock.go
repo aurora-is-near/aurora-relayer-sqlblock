@@ -16,6 +16,8 @@ import (
 	"github.com/btcsuite/btcutil/base58"
 )
 
+const transactionOutputBorshLength = 24
+
 type Uint256 string
 type Uint64 uint64
 type H256 string
@@ -156,7 +158,12 @@ func (transaction Transaction) insertData() insertData {
 	}
 	var output *string
 	if len(transaction.Output) > 0 {
-		o := hex.EncodeToString(transaction.Output)
+		var o string
+		if len(transaction.Output) == transactionOutputBorshLength {
+			o = hex.EncodeToString(transaction.Output[4:])
+		} else {
+			o = hex.EncodeToString(transaction.Output)
+		}
 		output = withHexPrefix(o)
 	}
 
