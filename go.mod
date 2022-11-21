@@ -6,6 +6,7 @@ require (
 	github.com/btcsuite/btcutil v1.0.2
 	github.com/doug-martin/goqu/v9 v9.18.0
 	github.com/jackc/pgx/v4 v4.14.1
+	github.com/near/borsh-go v0.3.1
 	github.com/spf13/viper v1.10.1
 )
 

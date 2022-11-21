@@ -12,6 +12,7 @@ import (
 	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/postgres"
 	"github.com/doug-martin/goqu/v9/exp"
+	"github.com/near/borsh-go"
 
 	"github.com/btcsuite/btcutil/base58"
 )
@@ -156,7 +157,14 @@ func (transaction Transaction) insertData() insertData {
 	}
 	var output *string
 	if len(transaction.Output) > 0 {
-		o := hex.EncodeToString(transaction.Output)
+		var data []byte
+		var o string
+		err := borsh.Deserialize(&data, transaction.Output)
+		if err != nil {
+			o = hex.EncodeToString(transaction.Output)
+		} else {
+			o = hex.EncodeToString(data)
+		}
 		output = withHexPrefix(o)
 	}
 
