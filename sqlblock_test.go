@@ -295,6 +295,22 @@ func TestHugeInsert(t *testing.T) {
 			t.Errorf("Input size dows not match")
 		}
 	})
+
+	t.Run("near transaction hash", func(t *testing.T) {
+		var nearTransactionHash string
+		database.QueryRow(context.Background(), `SELECT near_hash::varchar FROM transaction WHERE hash = '\xaa08f5ec48b4421f7ef1d622b8ad3c82ac84bf0eaef3383f8dc2e1d0028d1710'`).Scan(&nearTransactionHash)
+		if nearTransactionHash != `\x304c8dce737b0c3e0e429ece573a06f74ac8a366e3669392dcb0657aa66e4f82` {
+			t.Errorf("tx has wrong near tx hash")
+		}
+	})
+
+	t.Run("near receipt hash", func(t *testing.T) {
+		var nearReceiptHash string
+		database.QueryRow(context.Background(), `SELECT near_receipt_hash::varchar FROM transaction WHERE hash = '\xaa08f5ec48b4421f7ef1d622b8ad3c82ac84bf0eaef3383f8dc2e1d0028d1710'`).Scan(&nearReceiptHash)
+		if nearReceiptHash != `\xfb585d4bcbd5956ba1039dc443c0e7831e3d51d941d21a13029d813a8ace042c` {
+			t.Errorf("tx has wrong near receipt hash")
+		}
+	})
 }
 
 func prepareDatabase() *pgxpool.Pool {
