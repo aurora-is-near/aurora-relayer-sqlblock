@@ -102,8 +102,8 @@ type ExistingBlock struct {
 }
 
 type NearTransaction struct {
-	Hash        string `cbor:"hash" json:"hash"`
-	ReceiptHash string `cbor:"receipt_hash" json:"receipt_hash"`
+	TransactionHash        string `cbor:"transaction_hash" json:"transaction_hash"`
+	ReceiptHash            string `cbor:"receipt_hash" json:"receipt_hash"`
 }
 
 func (block Block) insertData() insertData {
@@ -161,14 +161,16 @@ func (transaction Transaction) insertData() insertData {
 	}
 
 	accessList, _ := json.Marshal(transaction.AccessList)
-	receiptHash := hex.EncodeToString(base58.Decode(transaction.NearTransaction.ReceiptHash))
+	nearReceiptHash := hex.EncodeToString(base58.Decode(transaction.NearTransaction.ReceiptHash))
+	nearTransactionHash := hex.EncodeToString(base58.Decode(transaction.NearTransaction.TransactionHash))
+
 	return insertData{
 		"block":                    transaction.BlockHeight,
 		"block_hash":               withHexPrefix(transaction.BlockHash),
 		"index":                    transaction.TransactionIndex,
 		"hash":                     withHexPrefix(transaction.Hash),
-		"near_hash":                withHexPrefix(receiptHash),
-		"near_receipt_hash":        withHexPrefix(receiptHash),
+		"near_hash":                withHexPrefix(nearTransactionHash),
+		"near_receipt_hash":        withHexPrefix(nearReceiptHash),
 		"from":                     withHexPrefix(transaction.From),
 		"to":                       withHexPrefix(transaction.To),
 		"nonce":                    transaction.Nonce.toSqlValue(),
